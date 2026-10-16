@@ -1,0 +1,1271 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Fredagsquizen · Theo vs Lucas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Saira+Condensed:wght@600;700;800&display=swap">
+<style>
+:root {
+  --bg: #eef2f6;
+  --bg-subtle: #e2e8f0;
+  --paper: #ffffff;
+  --paper-alt: #f8fafc;
+  --ink: #0f172a;
+  --ink-secondary: #334155;
+  --muted: #64748b;
+  --line: #cbd5e1;
+  --line-strong: #94a3b8;
+  --red: #be123c;
+  --red-soft: rgba(190, 18, 60, 0.1);
+  --blue: #1d4ed8;
+  --blue-soft: rgba(29, 78, 216, 0.08);
+  --ok: #15803d;
+  --ok-bg: #dcfce7;
+  --ok-border: #16a34a;
+  --bad: #b91c1c;
+  --bad-bg: #fee2e2;
+  --bad-border: #dc2626;
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.07), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+  --f-display: "Saira Condensed", "Arial Narrow", Arial, sans-serif;
+  --f-body: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #090d14;
+    --bg-subtle: #111827;
+    --paper: #131c2a;
+    --paper-alt: #182334;
+    --ink: #f1f5f9;
+    --ink-secondary: #cbd5e1;
+    --muted: #8292a7;
+    --line: #233044;
+    --line-strong: #374963;
+    --red: #f43f5e;
+    --red-soft: rgba(244, 63, 94, 0.14);
+    --blue: #60a5fa;
+    --blue-soft: rgba(96, 165, 250, 0.12);
+    --ok: #4ade80;
+    --ok-bg: rgba(22, 163, 74, 0.18);
+    --ok-border: #22c55e;
+    --bad: #fb7185;
+    --bad-bg: rgba(225, 29, 72, 0.18);
+    --bad-border: #f43f5e;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35);
+    --shadow-md: 0 12px 28px -6px rgba(0, 0, 0, 0.5);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #090d14;
+  --bg-subtle: #111827;
+  --paper: #131c2a;
+  --paper-alt: #182334;
+  --ink: #f1f5f9;
+  --ink-secondary: #cbd5e1;
+  --muted: #8292a7;
+  --line: #233044;
+  --line-strong: #374963;
+  --red: #f43f5e;
+  --red-soft: rgba(244, 63, 94, 0.14);
+  --blue: #60a5fa;
+  --blue-soft: rgba(96, 165, 250, 0.12);
+  --ok: #4ade80;
+  --ok-bg: rgba(22, 163, 74, 0.18);
+  --ok-border: #22c55e;
+  --bad: #fb7185;
+  --bad-bg: rgba(225, 29, 72, 0.18);
+  --bad-border: #f43f5e;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 12px 28px -6px rgba(0, 0, 0, 0.5);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  background-image: radial-gradient(circle at 50% 0%, var(--blue-soft), transparent 55%);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 16px;
+  line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 24px 56px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Rink-linjer överst */
+.rink-bar {
+  height: 6px;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 6px;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.rink-bar span:nth-child(1),
+.rink-bar span:nth-child(3) { background: var(--blue); }
+.rink-bar span:nth-child(2) {
+  background: repeating-linear-gradient(90deg, var(--red) 0 16px, transparent 16px 22px);
+}
+
+/* Sidhuvud / Scoreboard */
+.head {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.head-top {
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 64ch;
+}
+
+.eyebrow {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--blue);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--red);
+  display: inline-block;
+}
+
+.head h1 {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: clamp(38px, 6vw, 60px);
+  line-height: 0.92;
+  letter-spacing: 0.02em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.head p {
+  margin: 4px 0 0;
+  color: var(--ink-secondary);
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+
+.head-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.score-pill {
+  background: var(--paper-alt);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 16px;
+  text-align: right;
+  min-width: 120px;
+}
+
+.score-pill .lbl {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: block;
+}
+
+.score-pill .val {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 28px;
+  line-height: 1.05;
+  font-variant-numeric: tabular-nums;
+}
+
+.score-pill .val span {
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.theme-btn {
+  background: var(--paper-alt);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  border-radius: 8px;
+  width: 42px;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.theme-btn:hover {
+  border-color: var(--ink);
+  background: var(--bg-subtle);
+}
+.theme-btn svg { width: 18px; height: 18px; }
+
+.meta {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+  background: var(--paper-alt);
+}
+
+.meta div {
+  padding: 10px 20px;
+  border-right: 1px solid var(--line);
+  min-width: 0;
+}
+.meta div:last-child { border-right: 0; }
+
+.lbl {
+  font-family: var(--f-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: block;
+}
+
+.val {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.head h1 .vs {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.5em;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--red);
+}
+.head h1 .vs i {
+  font-style: normal;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* Progress-segment */
+.progress-strip {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 4px;
+  padding: 10px 24px;
+  background: var(--paper);
+  border-top: 1px solid var(--line);
+}
+
+.seg {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--bg-subtle);
+  transition: background 0.2s, transform 0.2s;
+}
+.seg.cur {
+  background: var(--ink);
+  transform: scaleY(1.35);
+}
+.seg.ok { background: var(--ok-border); }
+.seg.bad { background: var(--bad-border); }
+.seg.ot-seg { opacity: 0.85; }
+
+/* Huvudlayout: 2 kolumner på desktop */
+.arena {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.85fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.main-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Frågekort */
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-top: 5px solid var(--blue);
+  border-radius: 10px;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.card.ot { border-top-color: var(--red); }
+
+.cardtop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 14px 24px;
+  background: var(--paper-alt);
+  border-bottom: 1px solid var(--line);
+}
+
+.period-badge {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--blue);
+  background: var(--blue-soft);
+  padding: 3px 10px;
+  border-radius: 4px;
+}
+
+.card.ot .period-badge {
+  color: var(--red);
+  background: var(--red-soft);
+}
+
+.count {
+  font-family: var(--f-mono);
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.qbody {
+  padding: 26px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.qheader {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.qno {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 32px;
+  line-height: 1;
+  color: var(--ink);
+  background: var(--bg-subtle);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  min-width: 52px;
+  height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.card.ot .qno {
+  color: var(--red);
+  border-color: var(--red);
+  background: var(--red-soft);
+}
+
+.qtext {
+  font-size: clamp(19px, 2.5vw, 23px);
+  line-height: 1.38;
+  margin: 0;
+  font-weight: 700;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+
+.qtext em {
+  font-style: normal;
+  color: var(--blue);
+  text-decoration: underline;
+  text-decoration-color: var(--red);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.opts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.opt {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  text-align: left;
+  width: 100%;
+  min-width: 0;
+  font-family: var(--f-body);
+  font-size: 15.5px;
+  font-weight: 600;
+  line-height: 1.35;
+  border: 1.5px solid var(--line);
+  background: var(--paper-alt);
+  color: var(--ink);
+  padding: 14px 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: transform 0.1s ease, border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.opt:hover:not(:disabled) {
+  border-color: var(--blue);
+  background: var(--paper);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.opt:active:not(:disabled) { transform: translateY(0); }
+.opt:disabled { cursor: default; }
+
+.opt .key {
+  font-family: var(--f-mono);
+  font-weight: 700;
+  font-size: 13px;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
+  color: var(--ink-secondary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+
+.opt:hover:not(:disabled) .key {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+.opt .txt {
+  flex: 1;
+  min-width: 0;
+}
+
+.opt .icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.opt.right {
+  border-color: var(--ok-border);
+  background: var(--ok-bg);
+}
+.opt.right .key {
+  background: var(--ok-border);
+  border-color: var(--ok-border);
+  color: #fff;
+}
+.opt.right .icon { color: var(--ok); }
+
+.opt.wrong {
+  border-color: var(--bad-border);
+  background: var(--bad-bg);
+}
+.opt.wrong .key {
+  background: var(--bad-border);
+  border-color: var(--bad-border);
+  color: #fff;
+}
+.opt.wrong .icon { color: var(--bad); }
+
+.opt.dim { opacity: 0.45; }
+
+/* Domslut / Förklaring */
+.verdict {
+  background: var(--paper-alt);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--ink);
+  border-radius: 8px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.verdict.ok { border-left-color: var(--ok-border); }
+.verdict.bad { border-left-color: var(--bad-border); }
+
+.vtext {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 22px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 1.1;
+}
+.vtext.ok { color: var(--ok); }
+.vtext.bad { color: var(--bad); }
+
+.anote {
+  margin: 0;
+  color: var(--ink-secondary);
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+
+/* Kontroller */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 14px 24px;
+  background: var(--paper-alt);
+  border-top: 1px solid var(--line);
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hint {
+  font-family: var(--f-mono);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.btn {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1.5px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  padding: 9px 20px;
+  cursor: pointer;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity 0.15s, transform 0.1s, background 0.15s;
+}
+
+.btn:hover:not(:disabled) { background: var(--bg-subtle); }
+.btn:active:not(:disabled) { transform: translateY(1px); }
+.btn:disabled { opacity: 0.35; cursor: default; }
+
+.btn.primary {
+  background: var(--ink);
+  color: var(--paper);
+}
+.btn.primary:hover:not(:disabled) {
+  opacity: 0.9;
+  background: var(--ink);
+}
+
+button:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 2px;
+}
+
+/* Slutresultat (Ligger under kortet utan att skapa layout-hopp mitt i fråga 10) */
+.result {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-top: 5px solid var(--ink);
+  border-radius: 10px;
+  padding: 24px;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 28px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.result-left {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex: 1 1 300px;
+}
+
+.result .big {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: clamp(54px, 8vw, 76px);
+  line-height: 0.85;
+  font-variant-numeric: tabular-nums;
+  background: var(--paper-alt);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 16px 20px;
+  text-align: center;
+}
+
+.result .big span {
+  font-size: 0.42em;
+  color: var(--muted);
+  font-weight: 600;
+  display: block;
+  margin-top: 4px;
+}
+
+.result .rt {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.result h2 {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 28px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 1.05;
+}
+
+.result p {
+  margin: 0;
+  color: var(--ink-secondary);
+  font-size: 14.5px;
+}
+
+.copy-col { display: flex; flex-direction: column; gap: 10px; align-items: flex-end; min-width: 0; max-width: 100%; }
+.copy-fallback { display: flex; flex-direction: column; gap: 4px; width: 100%; min-width: 0; }
+.copy-fallback textarea {
+  width: 100%; min-width: 0; max-width: 340px; resize: none;
+  font-family: var(--f-mono); font-size: 13px; line-height: 1.4;
+  background: var(--paper-alt); color: var(--ink);
+  border: 1px solid var(--line-strong); border-radius: 6px; padding: 8px 10px;
+}
+
+/* Matchprotokoll (Sidopanel på desktop) */
+.proto {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: calc(20px + env(safe-area-inset-top, 0px));
+  overflow: hidden;
+}
+
+.protohead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: var(--paper-alt);
+  border-bottom: 2px solid var(--ink);
+}
+
+.protohead h2 {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.proto-sub {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.tablewrap { overflow-x: auto; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+th {
+  font-family: var(--f-mono);
+  font-weight: 600;
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: left;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--line);
+  background: var(--paper-alt);
+}
+
+td {
+  padding: 9px 16px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+}
+
+tr:last-child td { border-bottom: 0; }
+
+tr.pgroup td {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--blue);
+  background: var(--bg-subtle);
+  padding-block: 5px;
+}
+
+tr.pgroup.ot td { color: var(--red); }
+
+tr.row.cur td {
+  background: var(--blue-soft);
+  font-weight: 600;
+}
+
+tr.row.cur td:first-child {
+  box-shadow: inset 4px 0 0 var(--blue);
+}
+
+tr.row.locked td.t {
+  color: var(--muted);
+  font-style: italic;
+}
+
+td.n {
+  font-family: var(--f-mono);
+  font-size: 12px;
+  font-weight: 600;
+  width: 3.2em;
+  color: var(--muted);
+}
+
+td.t {
+  font-size: 13.5px;
+  line-height: 1.35;
+}
+
+td.s {
+  width: 5.5em;
+  text-align: right;
+}
+
+.pill {
+  display: inline-block;
+  font-family: var(--f-display);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.s-ok { color: var(--ok); background: var(--ok-bg); }
+.s-bad { color: var(--bad); background: var(--bad-bg); }
+.s-cur { color: var(--blue); background: var(--blue-soft); }
+.s-none { color: var(--muted); font-family: var(--f-mono); }
+
+.foot {
+  font-family: var(--f-mono);
+  font-size: 12px;
+  color: var(--muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  justify-content: space-between;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+
+kbd {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  border: 1px solid var(--line-strong);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 1px 6px;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+@media (max-width: 900px) {
+  .arena { grid-template-columns: minmax(0, 1fr); }
+  .proto { position: static; }
+}
+
+@media (max-width: 620px) {
+  .opts { grid-template-columns: minmax(0, 1fr); }
+  .meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .meta div:nth-child(2) { border-right: 0; }
+  .meta div:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  .head-top, .qbody, .cardtop, .controls { padding-left: 16px; padding-right: 16px; }
+  .progress-strip { padding-left: 16px; padding-right: 16px; }
+  .qheader { flex-direction: column; gap: 10px; }
+  .qno { height: 38px; min-width: 44px; font-size: 24px; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .verdict { animation: slideIn 0.22s ease-out; }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: none; }
+  }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="rink-bar" aria-hidden="true"><span></span><span></span><span></span></div>
+
+  <header class="head">
+    <div class="head-top">
+      <div class="brand">
+        <span class="eyebrow">Matchprotokoll · Ishockey</span>
+        <h1>Fredagsquizen<span class="vs">Theo <i>vs</i> Lucas</span></h1>
+        <p>Tio frågor om rekord, historia och regelboken. Svaret låses direkt och ger ett poäng om det är rätt. Du kan inte gå tillbaka, hoppa över en fråga eller göra om quizen. Vid lika poäng avgör förlängningen.</p>
+      </div>
+      <div class="head-actions">
+        <div class="score-pill" aria-live="polite">
+          <span class="lbl">Ställning</span>
+          <span class="val" id="score">0 <span>/ 10</span></span>
+        </div>
+        <button class="theme-btn" id="themeBtn" type="button" title="Växla ljust/mörkt tema" aria-label="Växla ljust eller mörkt tema">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="meta">
+      <div><span class="lbl">Datum</span><span class="val">2026-10-16</span></div>
+      <div><span class="lbl">Gren</span><span class="val">Ishockey</span></div>
+      <div><span class="lbl">Format</span><span class="val">10 + FL + Bonus</span></div>
+      <div><span class="lbl">Underlag</span><span class="val">NHL grundserie</span></div>
+    </div>
+
+    <div class="progress-strip" id="progressStrip" aria-hidden="true"></div>
+  </header>
+
+  <main class="arena">
+    <div class="main-col">
+      <section class="card" id="card">
+        <div class="cardtop">
+          <span class="period-badge" id="period"></span>
+          <span class="count" id="count"></span>
+        </div>
+        <div class="qbody">
+          <div class="qheader">
+            <div class="qno" id="qno" aria-hidden="true"></div>
+            <p class="qtext" id="qtext"></p>
+          </div>
+          <div class="opts" id="opts" role="group" aria-label="Svarsalternativ"></div>
+          <div class="verdict" id="verdict" hidden aria-live="polite">
+            <p class="vtext" id="vtext"></p>
+            <p class="anote" id="anote"></p>
+          </div>
+        </div>
+        <div class="controls">
+          <span class="hint" id="hint">Välj ett alternativ</span>
+          <button class="btn primary" id="next" type="button">Nästa fråga →</button>
+        </div>
+      </section>
+
+      <section class="result" id="result" hidden aria-live="polite">
+        <div class="result-left">
+          <div class="big" id="rbig"></div>
+          <div class="rt">
+            <span class="lbl">Slutbetyg</span>
+            <h2 id="rtitle"></h2>
+            <p id="rtext"></p>
+          </div>
+        </div>
+        <div class="copy-col">
+          <button class="btn" id="copyBtn" type="button">Kopiera resultat</button>
+          <div class="copy-fallback" id="copyFallback" hidden>
+            <span class="lbl">Markera texten och kopiera den</span>
+            <textarea id="copyText" readonly rows="2"></textarea>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <aside class="proto" aria-label="Matchprotokoll">
+      <div class="protohead">
+        <h2>Matchprotokoll</h2>
+        <span class="proto-sub" id="protoSub">0 av 10 besvarade</span>
+      </div>
+      <div class="tablewrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Nr</th>
+              <th>Händelse / Fråga</th>
+              <th style="text-align:right">Utfall</th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="foot">
+    <span>Snabbkommandon: <kbd>A</kbd>–<kbd>D</kbd> eller <kbd>1</kbd>–<kbd>4</kbd> väljer svar · <kbd>→</kbd> eller <kbd>Enter</kbd> nästa fråga</span>
+    <span>Siffror avser NHL:s grundserie om inget annat anges.</span>
+  </footer>
+</div>
+
+<script>
+const P = {
+  1: "1:a perioden · Rekorden",
+  2: "2:a perioden · Historia & siffror",
+  3: "3:e perioden · Regelboken",
+  4: "Förlängning · Utslagsfråga",
+  5: "Bonus · Utanför protokollet"
+};
+
+const Q = [
+  {p:1, short:"Vem slog Gretzkys målrekord?",
+   q:"Vem slog Wayne Gretzkys rekord för flest mål i NHL:s grundserie, och vilket år?",
+   o:["Sidney Crosby, 2025","Aleksandr Ovetjkin, 2024","Aleksandr Ovetjkin, 2025","Jaromír Jágr, 2011"],
+   x:"HVAGRltVX1MbS0BHIRAXEQ4KDh1REgMVFwoDUginxAtTHwAEFwAcRkpcUUEDFh9VX1oEHhQbCURTV0FEVQQVEU4oFxJEOAgBGlUgCQkPCBYAFhJJUzYHDA4fBR8BRRYEDBwDEUkMBBxGSlxQQQqw1BlHWBg="},
+  {p:1, short:"Gretzkys målrekord på en säsong",
+   q:"Hur många mål gjorde Gretzky säsongen 1981–82, vilket fortfarande är NHL-rekord för en säsong?",
+   o:["86 mål","87 mål","92 mål","76 mål"],
+   x:"HVAGRltVX1MbS0BHV1RSCKfEC11RPAcdAABGARUBDQYBFFUBGxdOFRcBBQ9HFxQGGloOAQsfDBBBpMUHEBtaXF5GH6bBDUcGHxEMCEULCFICFhQJFwIQGxMAQEQP"},
+  {p:1, short:"Gretzkys assist mot andras poäng",
+   q:"Sant eller falskt: Gretzky har fler <em>assist</em> i NHL än någon annan spelare har <em>totala poäng</em>.",
+   o:["Sant","Falskt"],
+   x:"HVAGRltXX1MbS0BHPQccEUpBIAEUARMRHFRGQ0VdV1RTEAYaExYaSFIxEqLCEh9VAFoVAaXWCwMNDhQQG0VaLw8UHQinzBVTO7bIHRdURkNFXVNWUwEaqt4LCUhSVERYUUBRl+HoRV9GS1dVQVpTRUdJGxYdDwERRAwCAVG2zRRFJKXTAhYSRwAQGB0WDAkHUhULosMdFltLBw=="},
+  {p:2, short:"Flest Stanley Cup-titlar som spelare",
+   q:"Vilken spelare har vunnit Stanley Cup flest gånger som spelare?",
+   o:["Jean Béliveau, 10 titlar","Henri Richard, 11 titlar","Maurice Richard, 8 titlar","Wayne Gretzky, 4 titlar"],
+   x:"HVAGRltWX1MbS0BHJgMcFw1BNRoSHQgIAU4QEwsKQRQSHAEFEwIPRhcJEgBHBxgBBRsXTgsXAUQsCB0FBwwbCU4lEwsFBQ4WHwZHWBg="},
+  {p:2, short:"Flest NHL-poäng av en svensk",
+   q:"Vilken svensk har gjort flest poäng i NHL:s grundserie?",
+   o:["Nicklas Lidström","Henrik Sedin","Mats Sundin","Henrik Zetterberg"],
+   x:"HVAGRltVX1MbS0BHIwcGFkQyEh0VHAdARVtQRkUJosIfUV5JTV1bRhMWFwgUB1FISUtFXVJLRRQOpNcfEkdYGA=="},
+  {p:2, short:"Bill Mosienkos rekord från 1952",
+   q:"Bill Mosienko satte 1952 ett rekord som ingen har kommit i närheten av. Vilket?",
+   o:["Flest mål i en och samma match","Snabbaste målet från matchstart","Snabbaste hattricket, 3 mål på 21 sekunder","Flest raka matcher med mål"],
+   x:"HVAGRltVX1MbS0BHOhQXRQmiwh9RBarfRVxXUhYBChIdFRAbVkUKAxxFVlJHHhAHGlpUV1NARQKi0QFRNgETBg8BHUUmDQYQGlUhGxIFFVxHGQ=="},
+  {p:2, short:"Flest utvisningsminuter i NHL",
+   q:"Vem har flest utvisningsminuter i NHL:s historia?",
+   o:["Tie Domi","Dave \"Tiger\" Williams","Bob Probert","Marty McSorley"],
+   x:"HVAGRltWX1MbS0BHKgcEAEQ9RScYEgwIOUxGJQwIDQ4SHAZTWlZOX0RTRAwOHQQBDAhJThAbCQ8EE1McGh0JEw8UExdEV1FTBRwEFwQcRh0GDEFRUxwcBw8RCxRSDEQUEwUYBgcTCwkVEKbBEgIHX1cU"},
+  {p:3, short:"Mål under 5-minutersutvisning",
+   q:"Ett lag gör mål i powerplay under en <em>5-minutersutvisning</em>. Kommer den utvisade spelaren tillbaka in på isen?",
+   o:["Ja, utvisningen avbryts direkt","Nej, hela straffet avtjänas","Ja, men först när halva tiden gått","Ja, om målet görs i första perioden"],
+   x:"HVAGRltWX1MbS0BHKxIGRRcVpMUDBwxaFhoUEwMCQU9GURgAFBAaAwBMRAARBxu2zRQEHUYbRRcICVMZEAUSABpGHQQSEgIHBVUBDxdOC7HACgYGUxy2zBZFHQkfRQOi0QECW0k/CwoHARFEBBMHURgAFAEcA1IWEBMGFRdVQUhFAw8cEBAEFVpRFB8YFxcSAUUSCANTHLbMFkUHRhwQCQQVsNUHHVqm2BAXFwiiwxQUW0sH"},
+  {p:3, short:"Vad avgör offside?",
+   q:"Offside: vad avgör om en spelare är offside?",
+   o:["Klubbans position","Skridskornas position","Den kroppsdel som är längst fram","Var pucken befann sig vid passningen"],
+   x:"HVAGRltWX1MbS0BHPRYXCQUTAh1Rts0IRQEAFBYNBQJTHhhJGKbLAhNFFwoVGhUGAhUXAAdSpsATRxsUGR1aptgQFxdEAAkVEBkFCR8BCBcLF0EFH7LQBRMLBANSDAoPBh1RBRwZDgsIUg0BDRNTGRQbWhUPFQEAFgATUxUQB1RFJQoHBwYACQBRBQYJDBoPHQtEEgYYHxQbWgcLEgsBAQ0UFl9XFA=="},
+  {p:3, short:"Trapetsen bakom målet",
+   q:"Vad är <em>trapetsen</em> bakom målet i NHL?",
+   o:["Området där målvakten får spela pucken bakom mållinjen","Zonen där backarna ska stå vid tekning","Målgården, där motståndare inte får hindra målvakten","Ytan där avbytaren ska befinna sig vid spelarbyte"],
+   x:"HVAGRltXX1MbS0BHPRYXCQUTRx6y0AUMBAUSFwtEERIQGhAHWgcPDR0IRAyk1h0ZABQPCwhSEBAACRWywxtaERwHAgAQEgIdUQAdHqbYCwFFARUTUxwcBx4XC0YBERYAARVRXVtaCAcIBxEBE05TF7bfCEUIpcQXABOkxRsUBx4ATgcERRcRAh8UAUdYGA=="},
+  {p:4, short:"Gordie Howe-hattrick",
+   q:"Vad innebär ett <em>Gordie Howe-hattrick</em>?",
+   o:["Tre mål i samma period","Ett mål i varje period","Ett mål, en assist och ett slagsmål i samma match","Ett mål, en assist och ett avgörande straffslag"],
+   x:"HVAGRltVX1MbS0BHKxIGRQmiwh9dVQwURQ8VAQwXFUccEh1JHxEaRgEJBQYUHrLQBVoMThUTCAkARx4QAQoSS04gAKbBBgYdURQHDKbKCBYWRAQJFxAGHVoTBwJSCQ0KBlMBGqreCwlGHQYMQRWw1R4HGxZODxwRAUEOHVEcSRUXCg8cBBYIAlMFGh0bCR4JscEKBklRDA=="},
+  {p:5, short:"Theodor eller lucceboy_02?",
+   q:"Vem är bäst på hockey, <em>Theodor</em> eller <em>lucceboy_02</em>?",
+   o:["Theodor","lucceboy_02"],
+   x:"HVAGRls8Q11ENFZHAERIRyaiwhcQVRoMBBwDHEUDDgMYstEHFBZARjQXp8QAEh9VBRMCCQMARREVBh0Xtt8IRR4UHRELCggfHRAdWgoNDlIVp8QRFgMeCAhFBwgGAEQSCwYFBwwJEAISExEBFUlRDA=="}
+];
+/* Facit avkodas först när sidan körs */
+(function(){
+  const K = "fredagsquizen";
+  Q.forEach(q => {
+    const b = Uint8Array.from(atob(q.x), ch => ch.charCodeAt(0));
+    for (let i = 0; i < b.length; i++) b[i] ^= K.charCodeAt(i % K.length);
+    const d = JSON.parse(new TextDecoder().decode(b));
+    q.c = d.c; q.n = d.n; delete q.x;
+  });
+})();
+
+const MAIN = 10;
+const KEYS = ["A", "B", "C", "D"];
+const STORE = "fredagsquizen-2026-10-16";
+const THEME_STORE = "fredagsquizen-theme";
+
+const ICON_OK = `<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd"/></svg>`;
+const ICON_BAD = `<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z"/></svg>`;
+
+const isRight = (q, k) => Array.isArray(q.c) ? q.c.includes(k) : q.c === k;
+const rightKeys = q => Array.isArray(q.c) ? q.c.map(i => KEYS[i]).join("/") : KEYS[q.c];
+const label = (q, k) => q.p === 4 ? "FL" : q.p === 5 ? "B" : String(k + 1).padStart(2, "0");
+const $ = id => document.getElementById(id);
+const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
+let state = { i: 0, pick: Q.map(() => null) };
+
+function save() {
+  try { localStorage.setItem(STORE, JSON.stringify(state)); } catch (e) {}
+}
+
+function load() {
+  try {
+    const d = JSON.parse(localStorage.getItem(STORE));
+    return valid(d) ? d : null;
+  } catch (e) { return null; }
+}
+
+function valid(d) {
+  return d && Array.isArray(d.pick) && d.pick.length === Q.length &&
+         Number.isInteger(d.i) && d.i >= 0 && d.i < Q.length;
+}
+
+function render() {
+  const x = Q[state.i];
+  const ot = x.p >= 4;
+  const pk = state.pick[state.i];
+  const done = pk !== null;
+
+  $("card").classList.toggle("ot", ot);
+  $("period").textContent = P[x.p];
+  $("count").textContent = x.p === 4 ? "Utslagsfråga" : x.p === 5 ? "Bonusfråga" : `Fråga ${state.i + 1} av ${MAIN}`;
+  $("qno").textContent = label(x, state.i);
+  $("qtext").innerHTML = x.q;
+
+  $("opts").innerHTML = x.o.map((t, k) => {
+    let cls = "opt";
+    let icon = "";
+    if (done) {
+      if (isRight(x, k)) { cls += " right"; icon = ICON_OK; }
+      else if (k === pk) { cls += " wrong"; icon = ICON_BAD; }
+      else { cls += " dim"; }
+    }
+    return `<button type="button" class="${cls}" data-k="${k}" ${done ? "disabled" : ""}>
+      <span class="key">${KEYS[k]}</span>
+      <span class="txt">${esc(t)}</span>
+      <span class="icon">${icon}</span>
+    </button>`;
+  }).join("");
+
+  $("verdict").hidden = !done;
+  if (done) {
+    const ok = isRight(x, pk);
+    $("verdict").className = "verdict " + (ok ? "ok" : "bad");
+    $("vtext").textContent = ok ? "Rätt svar" : `Fel svar · Rätt alternativ är ${rightKeys(x)}`;
+    $("vtext").className = "vtext " + (ok ? "ok" : "bad");
+    $("anote").textContent = x.n;
+  }
+
+  const last = state.i === Q.length - 1;
+  $("hint").textContent = done
+    ? (last ? "Matchen är slut – samtliga frågor besvarade" : "Svaret är låst · Gå vidare till nästa")
+    : "Välj ett svarsalternativ för att låsa ditt svar";
+
+  $("next").disabled = !done || last;
+  $("next").hidden = last;
+  $("next").textContent = state.i === MAIN - 1 ? "Till förlängning →" : state.i === MAIN ? "Till bonusfråga →" : "Nästa fråga →";
+
+  // Progress-indikator överst
+  $("progressStrip").innerHTML = Q.map((q, k) => {
+    const m = state.pick[k];
+    let cls = "seg" + (q.p >= 4 ? " ot-seg" : "");
+    if (k === state.i && m === null) cls += " cur";
+    else if (m !== null) cls += isRight(q, m) ? " ok" : " bad";
+    return `<div class="${cls}"></div>`;
+  }).join("");
+
+  // Matchprotokoll med anti-spoiler för ej nådda frågor
+  let html = "", lastP = 0;
+  Q.forEach((q, k) => {
+    if (q.p !== lastP) {
+      html += `<tr class="pgroup${q.p >= 4 ? " ot" : ""}"><td colspan="3">${P[q.p]}</td></tr>`;
+      lastP = q.p;
+    }
+    const m = state.pick[k];
+    const reached = k <= state.i || m !== null;
+    const title = reached ? esc(q.short) : "Låst fråga";
+    let statusHtml = '<span class="s-none">–</span>';
+    if (m !== null) {
+      statusHtml = isRight(q, m)
+        ? '<span class="pill s-ok">Rätt</span>'
+        : '<span class="pill s-bad">Fel</span>';
+    } else if (k === state.i) {
+      statusHtml = '<span class="pill s-cur">Pågår</span>';
+    }
+    const rowCls = `row${k === state.i ? " cur" : ""}${!reached ? " locked" : ""}`;
+    html += `<tr class="${rowCls}"><td class="n">${label(q, k)}</td><td class="t">${title}</td><td class="s">${statusHtml}</td></tr>`;
+  });
+  $("rows").innerHTML = html;
+
+  const main = state.pick.slice(0, MAIN);
+  const pts = main.filter((v, k) => v !== null && isRight(Q[k], v)).length;
+  const answered = main.filter(v => v !== null).length;
+
+  $("score").innerHTML = `${pts} <span>/ ${MAIN}</span>`;
+  $("protoSub").textContent = `${answered} av ${MAIN} besvarade`;
+
+  const fin = answered === MAIN;
+  $("result").hidden = !fin;
+  if (fin) {
+    $("rbig").innerHTML = `${pts}<span>av ${MAIN} p</span>`;
+    $("rtitle").textContent =
+      pts >= 9 ? "Domarkvalitet" :
+      pts >= 7 ? "Förstakedja" :
+      pts >= 5 ? "Tredjekedja" :
+      pts >= 3 ? "Läktarplats" : "Utvisningsbåset";
+
+    const otAns = state.pick[MAIN];
+    $("rtext").textContent = otAns === null
+      ? "Ordinarie tid är slut. Förlängningsfrågan avgör vid lika poäng."
+      : `Ordinarie tid: ${pts}/${MAIN} poäng · Förlängningsfråga: ${isRight(Q[MAIN], otAns) ? "Rätt" : "Fel"}.`;
+  }
+}
+
+function next() {
+  if (state.pick[state.i] === null || state.i >= Q.length - 1) return;
+  state.i++;
+  save();
+  render();
+  if (window.innerWidth <= 900) {
+    $("card").scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+}
+
+function choose(k) {
+  if (state.pick[state.i] !== null || k < 0 || k >= Q[state.i].o.length) return;
+  state.pick[state.i] = k;
+  save();
+  render();
+}
+
+$("opts").addEventListener("click", e => {
+  const b = e.target.closest(".opt");
+  if (b) choose(+b.dataset.k);
+});
+
+$("next").addEventListener("click", next);
+
+document.addEventListener("keydown", e => {
+  // Ignorera kortkommandon (Ctrl+A, Ctrl+C, Cmd+R etc.) så att svar inte låses av misstag
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+
+  if (e.key === "ArrowRight" || (e.key === "Enter" && document.activeElement !== $("themeBtn") && document.activeElement !== $("copyBtn"))) {
+    if (state.pick[state.i] !== null && state.i < Q.length - 1) {
+      e.preventDefault();
+      next();
+    }
+    return;
+  }
+
+  const upper = e.key.toUpperCase();
+  const letterIdx = KEYS.indexOf(upper);
+  const numIdx = ["1", "2", "3", "4"].indexOf(e.key);
+  const idx = letterIdx >= 0 ? letterIdx : numIdx;
+  if (idx >= 0) choose(idx);
+});
+
+// Spoilerfri kopiering av resultatrad
+$("copyBtn").addEventListener("click", async () => {
+  const main = state.pick.slice(0, MAIN);
+  const pts = main.filter((v, k) => v !== null && isRight(Q[k], v)).length;
+  const grid = main.map((v, k) => isRight(Q[k], v) ? "🟩" : "🟥").join("");
+  const otAns = state.pick[MAIN];
+  const otStr = otAns === null ? "⏳" : (isRight(Q[MAIN], otAns) ? "🟩" : "🟥");
+  const text = `🏒 Fredagsquizen · Theo vs Lucas (2026-10-16): ${pts}/${MAIN} poäng\n${grid} · FL: ${otStr}`;
+  const fallback = () => {
+    $("copyText").value = text;
+    $("copyFallback").hidden = false;
+    $("copyText").focus();
+    $("copyText").select();
+    $("copyBtn").textContent = "Kopiering nekades";
+  };
+  try {
+    if (!navigator.clipboard) throw new Error("no clipboard");
+    await navigator.clipboard.writeText(text);
+    $("copyFallback").hidden = true;
+    $("copyBtn").textContent = "Resultat kopierat";
+    setTimeout(() => { $("copyBtn").textContent = "Kopiera resultat"; }, 2200);
+  } catch (e) { fallback(); }
+});
+
+// Temaväxling (Ljust / Mörkt)
+function initTheme() {
+  try {
+    const saved = localStorage.getItem(THEME_STORE);
+    if (saved === "dark" || saved === "light") {
+      document.documentElement.setAttribute("data-theme", saved);
+    }
+  } catch (e) {}
+}
+
+$("themeBtn").addEventListener("click", () => {
+  const root = document.documentElement;
+  const current = root.getAttribute("data-theme");
+  const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const isDark = current === "dark" || (!current && systemDark);
+  const nextTheme = isDark ? "light" : "dark";
+  root.setAttribute("data-theme", nextTheme);
+  try { localStorage.setItem(THEME_STORE, nextTheme); } catch (e) {}
+});
+
+initTheme();
+state = load() || state;
+render();
+</script>
+</body>
+</html>
